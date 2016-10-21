@@ -12,6 +12,8 @@ ENV Py2_PKGS="python-pip python-numpy python-scipy python-matplotlib"
 ENV JM_PKGS="cython jcc subversion ant openjdk-6-jdk python-dev python-svn python-lxml python-nose zlib1g-dev libboost-dev dpkg-dev build-essential libwebkitgtk-dev libjpeg-dev libtiff-dev libgtk2.0-dev libsdl1.2-dev libgstreamer-plugins-base0.10-dev libnotify-dev freeglut3 freeglut3-dev"
 ENV PIP2="jupyter vpython CVXcanon cvxpy"
 
+USER root
+
 # Install required packages
 RUN apt-get update && \
     apt-get install -y --install-recommends $PKGS && \
@@ -62,9 +64,7 @@ RUN wget http://sourceforge.net/projects/casadi/files/CasADi/$CASADIVERSION/linu
     -O $DL/casadi-py27-np1.9.1-v$CASADIVERSION.tar.gz && \
     mkdir $WS/casadi-py27-np1.9.1-v$CASADIVERSION && \
     tar -zxvf $DL/casadi-py27-np1.9.1-v$CASADIVERSION.tar.gz \
-    -C $WS/casadi-py27-np1.9.1-v$CASADIVERSION && \
-    cd $WS/casadi-py27-np1.9.1-v$CASADIVERSION && mkdir build && cd build && \
-    cmake -DWITH_PYTHON=ON ..
+    -C $WS/casadi-py27-np1.9.1-v$CASADIVERSION
 
 # Adding CasADi to PYTHONPATH
 ENV PYTHONPATH=$PYTHONPATH:$WS/casadi-py27-np1.9.1-v$CASADIVERSION
