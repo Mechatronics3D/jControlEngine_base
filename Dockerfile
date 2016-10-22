@@ -57,15 +57,23 @@ RUN git clone https://github.com/cvxgrp/cvx_short_course.git $WS/cvxpy
 # Clone cvxflow
 RUN git clone https://github.com/mwytock/cvxflow.git $WS/cvxflow
 
-# Install CasADi 
+# Install CasADi for Python 2.7
 RUN wget http://sourceforge.net/projects/casadi/files/CasADi/$CASADIVERSION/linux/casadi-py27-np1.9.1-v$CASADIVERSION.tar.gz/download \
     -O $DL/casadi-py27-np1.9.1-v$CASADIVERSION.tar.gz && \
     mkdir $WS/casadi-py27-np1.9.1-v$CASADIVERSION && \
     tar -zxvf $DL/casadi-py27-np1.9.1-v$CASADIVERSION.tar.gz \
     -C $WS/casadi-py27-np1.9.1-v$CASADIVERSION
 
+# Install CasADi for Python 3.4
+RUN wget http://sourceforge.net/projects/casadi/files/CasADi/$CASADIVERSION/linux/casadi-py34-np1.9.1-v$CASADIVERSION.tar.gz/download \
+    -O $DL/casadi-py34-np1.9.1-v$CASADIVERSION.tar.gz && \
+    mkdir $WS/casadi-py34-np1.9.1-v$CASADIVERSION && \
+    tar -zxvf $DL/casadi-py34-np1.9.1-v$CASADIVERSION.tar.gz \
+    -C $WS/casadi-py34-np1.9.1-v$CASADIVERSION
+    
 # Adding CasADi to PYTHONPATH
-ENV PYTHONPATH=$PYTHONPATH:$WS/casadi-py27-np1.9.1-v$CASADIVERSION
+ENV CASADIPATH2=$WS/casadi-py27-np1.9.1-v$CASADIVERSION
+ENV CASADIPATH3=$WS/casadi-py34-np1.9.1-v$CASADIVERSION
 
 # Install CasADi examples
 RUN wget http://sourceforge.net/projects/casadi/files/CasADi/$CASADIVERSION/casadi-example_pack-v$CASADIVERSION.zip \
