@@ -4,8 +4,8 @@ MAINTAINER Behzad Samadi <behzad@mechatronics3d.com>
 ENV CASADIVERSION=3.1.0-rc1
 
 ENV DL=$HOME/Downloads
-
 ENV WS=$HOME/work
+ENV ST=$HOME/.ipython/default_profile/startup
 
 ENV PKGS="wget unzip gcc g++ gfortran git cmake liblapack-dev pkg-config swig spyder time"
 ENV Py2_PKGS="python-pip python-numpy python-scipy python-matplotlib"
@@ -24,9 +24,7 @@ RUN pip install --upgrade pip
 
 RUN pip install $PIP2
 
-RUN pip install --upgrade --trusted-host wxpython.org --pre -f http://wxpython.org/Phoenix/snapshot-builds/ wxPython_Phoenix
-
-# Install Ipopt for JModelica
+# Install Ipopt
 RUN mkdir $DL
 RUN wget http://www.coin-or.org/download/source/Ipopt/Ipopt-3.12.6.tgz -O $DL/Ipopt-3.12.6.tgz
 RUN cd $DL && \
