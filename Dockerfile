@@ -65,15 +65,15 @@ RUN wget http://sourceforge.net/projects/casadi/files/CasADi/$CASADIVERSION/linu
     -C $WS/casadi-py27-np1.9.1-v$CASADIVERSION
 
 # Install CasADi for Python 3.4
-RUN wget http://sourceforge.net/projects/casadi/files/CasADi/$CASADIVERSION/linux/casadi-py34-np1.9.1-v$CASADIVERSION.tar.gz/download \
-    -O $DL/casadi-py34-np1.9.1-v$CASADIVERSION.tar.gz && \
-    mkdir $WS/casadi-py34-np1.9.1-v$CASADIVERSION && \
-    tar -zxvf $DL/casadi-py34-np1.9.1-v$CASADIVERSION.tar.gz \
-    -C $WS/casadi-py34-np1.9.1-v$CASADIVERSION
+RUN wget http://sourceforge.net/projects/casadi/files/CasADi/$CASADIVERSION/linux/casadi-py35-np1.9.1-v$CASADIVERSION.tar.gz/download \
+    -O $DL/casadi-py35-np1.9.1-v$CASADIVERSION.tar.gz && \
+    mkdir $WS/casadi-py35-np1.9.1-v$CASADIVERSION && \
+    tar -zxvf $DL/casadi-py35-np1.9.1-v$CASADIVERSION.tar.gz \
+    -C $WS/casadi-py35-np1.9.1-v$CASADIVERSION
     
 # Adding CasADi to PYTHONPATH
 ENV CASADIPATH2=$WS/casadi-py27-np1.9.1-v$CASADIVERSION
-ENV CASADIPATH3=$WS/casadi-py34-np1.9.1-v$CASADIVERSION
+ENV CASADIPATH3=$WS/casadi-py35-np1.9.1-v$CASADIVERSION
 
 # Install CasADi examples
 RUN wget http://sourceforge.net/projects/casadi/files/CasADi/$CASADIVERSION/casadi-example_pack-v$CASADIVERSION.zip \
