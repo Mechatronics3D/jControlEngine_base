@@ -1,12 +1,15 @@
 FROM jupyter/datascience-notebook
 MAINTAINER Behzad Samadi <behzad@mechatronics3d.com>
 
+# CasADi version
 ENV CASADIVERSION=3.1.0-rc1
 
+# Folders
 ENV DL=$HOME/Downloads
 ENV WS=$HOME/work
 ENV ST=$HOME/.ipython/default_profile/startup
 
+# Packages
 ENV PKGS="wget unzip gcc g++ gfortran git cmake liblapack-dev pkg-config swig spyder time"
 ENV Py2_PKGS="python-pip python-numpy python-scipy python-matplotlib"
 ENV JM_PKGS="cython jcc subversion ant openjdk-7-jdk python-dev python-svn python-lxml python-nose zlib1g-dev libboost-dev dpkg-dev build-essential libwebkitgtk-dev libjpeg-dev libtiff-dev libgtk2.0-dev libsdl1.2-dev libgstreamer-plugins-base0.10-dev libnotify-dev freeglut3 freeglut3-dev"
@@ -21,7 +24,6 @@ RUN apt-get update && \
     apt-get install -y --install-recommends $JM_PKGS
 
 RUN pip install --upgrade pip
-
 RUN pip install $PIP2
 
 # Install Ipopt
@@ -44,11 +46,12 @@ RUN cd $DL && \
     git clone https://github.com/originell/jpype.git && \
     cd jpype && python setup.py install
 
-# Define environment variables for JModelica
+# Define environment variables
 ENV JAVA_HOME=/usr/lib/jvm/java-7-openjdk-amd64/
 ENV IPOPT_HOME=$WS/Ipopt-3.12.6
 ENV SEPARATE_PROCESS_JVM=/usr/lib/jvm/java-7-openjdk-amd64/
 
+# Create cvxpy and cvxflow folders
 RUN cd $WS && mkdir cvxpy && mkdir cvxflow
 
 # Clone cvxpy
@@ -64,14 +67,14 @@ RUN wget http://sourceforge.net/projects/casadi/files/CasADi/$CASADIVERSION/linu
     tar -zxvf $DL/casadi-py27-np1.9.1-v$CASADIVERSION.tar.gz \
     -C $WS/casadi-py27-np1.9.1-v$CASADIVERSION
 
-# Install CasADi for Python 3.4
+# Install CasADi for Python 3.5
 RUN wget http://sourceforge.net/projects/casadi/files/CasADi/$CASADIVERSION/linux/casadi-py35-np1.9.1-v$CASADIVERSION.tar.gz/download \
     -O $DL/casadi-py35-np1.9.1-v$CASADIVERSION.tar.gz && \
     mkdir $WS/casadi-py35-np1.9.1-v$CASADIVERSION && \
     tar -zxvf $DL/casadi-py35-np1.9.1-v$CASADIVERSION.tar.gz \
     -C $WS/casadi-py35-np1.9.1-v$CASADIVERSION
     
-# Adding CasADi to PYTHONPATH
+# Defining CasADi path for each version
 ENV CASADIPATH2=$WS/casadi-py27-np1.9.1-v$CASADIVERSION
 ENV CASADIPATH3=$WS/casadi-py35-np1.9.1-v$CASADIVERSION
 
@@ -82,10 +85,12 @@ RUN wget http://sourceforge.net/projects/casadi/files/CasADi/$CASADIVERSION/casa
     unzip $DL/casadi-example_pack-v$CASADIVERSION.zip \
     -d $WS/casadi_examples
     
+# Giving the ownership of the folders to the NB_USER
 RUN chown -R $NB_USER $DL
-
 RUN chown -R $NB_USER $WS
 
+# Notebook startup script
 COPY nb_startup.py $ST
+COPY nb_startup.py $WS
 
 USER $NB_USER
