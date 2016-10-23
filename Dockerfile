@@ -12,8 +12,10 @@ ENV ST=$HOME/.ipython/default_profile/startup
 # Packages
 ENV PKGS="wget unzip gcc g++ gfortran git cmake liblapack-dev pkg-config swig spyder time"
 ENV Py2_PKGS="python-pip python-numpy python-scipy python-matplotlib"
+ENV Py3_PKGS="python3-pip python3-numpy python3-scipy python3-matplotlib"
 ENV JM_PKGS="cython jcc subversion ant openjdk-7-jdk python-dev python-svn python-lxml python-nose zlib1g-dev libboost-dev dpkg-dev build-essential libwebkitgtk-dev libjpeg-dev libtiff-dev libgtk2.0-dev libsdl1.2-dev libgstreamer-plugins-base0.10-dev libnotify-dev freeglut3 freeglut3-dev"
-ENV PIP2="jupyter vpython CVXcanon cvxpy"
+ENV PIP2="vpython CVXcanon cvxpy"
+ENV PIP3="vpython CVXcanon cvxpy"
 
 USER root
 
@@ -21,10 +23,13 @@ USER root
 RUN apt-get update && \
     apt-get install -y --install-recommends $PKGS && \
     apt-get install -y --install-recommends $Py2_PKGS && \
+    apt-get install -y --install-recommends $Py3_PKGS && \
     apt-get install -y --install-recommends $JM_PKGS
 
 RUN pip install --upgrade pip
 RUN pip install $PIP2
+RUN pip3 install --upgrade pip
+RUN pip3 install $PIP3
 
 # Install Ipopt
 RUN mkdir $DL
