@@ -86,6 +86,6 @@ RUN chown -R $NB_USER $DL
 
 RUN chown -R $NB_USER $WS
 
-RUN cp nb_startup.py $ST
+COPY nb_startup.py $ST
 
 USER $NB_USER
