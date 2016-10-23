@@ -15,7 +15,7 @@ ENV Py2_PKGS="python-pip python-numpy python-scipy python-matplotlib"
 ENV Py3_PKGS="python3-pip python3-numpy python3-scipy python3-matplotlib"
 ENV JM_PKGS="cython jcc subversion ant openjdk-7-jdk python-dev python-svn python-lxml python-nose zlib1g-dev libboost-dev dpkg-dev build-essential libwebkitgtk-dev libjpeg-dev libtiff-dev libgtk2.0-dev libsdl1.2-dev libgstreamer-plugins-base0.10-dev libnotify-dev freeglut3 freeglut3-dev"
 ENV PIP2="vpython CVXcanon cvxpy"
-ENV PIP3="vpython CVXcanon cvxpy"
+ENV PIP3="vpython CVXcanon"
 
 USER root
 
@@ -61,6 +61,10 @@ RUN cd $WS && mkdir cvxpy && mkdir cvxflow
 
 # Clone cvxpy
 RUN git clone https://github.com/cvxgrp/cvx_short_course.git $WS/cvxpy
+
+# Install cvxpy 
+RUN conda install -c cvxgrp cvxpy
+RUN conda install nose
 
 # Clone cvxflow
 RUN git clone https://github.com/mwytock/cvxflow.git $WS/cvxflow
